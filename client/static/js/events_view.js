@@ -292,12 +292,49 @@ var EventsView = function(userProfile, options) {
   function updateFilteringResult() {
     var numEvents = self.rawData["events"].length;
     var title;
-    if (!self.isFilteringOptionsUsed)
+    var filteringOpts = $("#filtering-options-brief");
+    if (!self.isFilteringOptionsUsed) {
+        filteringOpts.hide();
         title  = gettext("All Events");
-    else
+    } else {
+        filteringOpts.show();
+        filteringOpts.text(getBriefOfFilteringOptions());
         title  = gettext("Filtering Results");
+    }
     title += " (" + numEvents + ")";
     $("#controller-container-title").text(title);
+  }
+
+  function appendFilteringTimeRange(elementId, briefObj) {
+    var value = $(elementId).val();
+    if (!value)
+      value = $(elementId).attr("placeholder");
+    briefObj["brief"] += value;
+  }
+
+  function appendFilteringValue(elementId, briefObj) {
+    var value = $(elementId + " option:selected").text();
+    if (value == "---------")
+      return;
+    briefObj["brief"] += ", ";
+    briefObj["brief"] += value;
+  }
+
+  function getBriefOfFilteringOptions() {
+    var s = {"brief":""};
+    appendFilteringTimeRange("#begin-time", s);
+    s["brief"] += " - ";
+    appendFilteringTimeRange("#end-time", s);
+
+    appendFilteringValue("#select-incident", s);
+    appendFilteringValue("#select-type", s);
+    appendFilteringValue("#select-severity", s);
+    appendFilteringValue("#select-server", s);
+    appendFilteringValue("#select-host-group", s);
+    appendFilteringValue("#select-host", s);
+
+    appendFilteringValue("#select-filter", s);
+    return s["brief"];
   }
 
   function showXHRError(XMLHttpRequest) {
