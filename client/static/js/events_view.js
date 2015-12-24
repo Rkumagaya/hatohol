@@ -399,6 +399,11 @@ var EventsView = function(userProfile, options) {
     $(document.body).scrollTop(0);
   }
 
+  function resetTimeRangeFilter() {
+    $("#begin-time").next(".clear-button").trigger('click');
+    $("#end-time").next(".clear-button").trigger('click');
+  }
+
   function resetQuickFilter() {
     $("#select-incident").val("");
     $("#select-type").val("");
@@ -611,6 +616,12 @@ var EventsView = function(userProfile, options) {
 
     $("#change-incident").change(function() {
       updateIncidentStatus();
+    });
+
+    $('button.reset-apply-all-filter').click(function() {
+      resetTimeRangeFilter();
+      resetQuickFilter();
+      load({ applyFilter: true });
     });
 
     $('button.btn-apply-all-filter').click(function() {
