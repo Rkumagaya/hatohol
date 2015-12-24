@@ -44,6 +44,7 @@ var EventsView = function(userProfile, options) {
   $.extend(self.baseQuery, getEventsQueryInURI());
   self.lastFilterId = null;
   self.lastQuickFilter = {};
+  self.isFilteringOptionsUsed = false;
   self.showToggleAutoRefreshButton();
   self.setupToggleAutoRefreshButtonHandler(load, self.reloadIntervalSeconds);
   self.abbreviateDescriptionLength = 30;
@@ -286,6 +287,17 @@ var EventsView = function(userProfile, options) {
         load({ page: page });
       }
     });
+  }
+
+  function updateFilteringResult() {
+    var numEvents = self.rawData["events"].length;
+    var title;
+    if (!self.isFilteringOptionsUsed)
+        title  = gettext("All Events");
+    else
+        title  = gettext("Filtering Results");
+    title += " (" + numEvents + ")";
+    $("#controller-container-title").text(title);
   }
 
   function showXHRError(XMLHttpRequest) {
@@ -622,10 +634,12 @@ var EventsView = function(userProfile, options) {
       resetTimeRangeFilter();
       resetQuickFilter();
       load({ applyFilter: true });
+      self.isFilteringOptionsUsed = false;
     });
 
     $('button.btn-apply-all-filter').click(function() {
       load({ applyFilter: true });
+      self.isFilteringOptionsUsed = true;
     });
 
     $("#select-filter").change(function() {
@@ -1389,6 +1403,7 @@ var EventsView = function(userProfile, options) {
     drawTableContents();
     setupTableColor();
     updatePager();
+    updateFilteringResult();
     setLoading(false);
     if (self.currentPage == 0)
       self.enableAutoRefresh(load, self.reloadIntervalSeconds);
