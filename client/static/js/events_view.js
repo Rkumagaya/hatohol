@@ -1011,9 +1011,11 @@ var EventsView = function(userProfile, options) {
   function renderTableDataEventType(event, server) {
     var type = event["type"];
     var typeClass = "event-type" + type;
+	var typeIcon = type=="0" ? "glyphicon-ok" : "glyphicon-ban-circle";
 
     return "<td class='" + getSeverityClass(event) + " " + typeClass + "'>" +
-      eventPropertyChoices.type[Number(type)].label + "</td>";
+      "<span class=\"glyphicon "+typeIcon+"\"></span> "+
+	  eventPropertyChoices.type[Number(type)].label + "</td>";
   }
 
   function renderTableDataTriggerStatus(event, server) {
@@ -1227,7 +1229,7 @@ var EventsView = function(userProfile, options) {
       if (self.baseQuery.sortOrder == hatohol.DATA_QUERY_OPTION_SORT_ASCENDING)
         icon = "up";
       th.find("i.sort").remove();
-      th.append("<i class='sort glyphicon glyphicon-arrow-" + icon +"'></i>");
+      th.append(" <i class='sort glyphicon glyphicon-collapse-" + icon +"'></i>");
       th.click(function() {
         switchSort();
       });
