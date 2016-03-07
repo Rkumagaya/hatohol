@@ -94,19 +94,30 @@ class Hap2FluentdMain(haplib.BaseMainPlugin):
     def __fluentd_manager_main_in_try_block(self):
         logger.info("Started fluentd manger process.")
         fluentd = subprocess.Popen(self.__launch_args, stdout=subprocess.PIPE)
+        sent_sigterm = False
         while True:
-            line = fluentd.stdout.readline()
-            if len(line) == 0:
-                logger.warning("The child process seems to have gone away.")
-                fluentd.kill() # To make sure that the child terminates
-                raise hap.Signal()
-            timestamp, tag, raw_msg = self.__parse_line(line)
-            if timestamp is None:
-                continue
-            if not self.__accept_tag_pattern.match(tag):
-                continue
-            self.__put_event(timestamp, tag, raw_msg)
-            self.__arm_info.success()
+            try:
+                self.__read_and_parse_one_line_from(fluentd)
+            except hap.Signal as e:
+                if e.flavor == "fluentd_read_finished":
+                    raise
+                elif not sent_sigterm:
+                    fluentd.send_signal(signal.SIGTERM)
+                    sent_sigterm = True
+
+    def __read_and_parse_one_line_from(self, fluentd):
+        line = fluentd.stdout.readline()
+        if len(line) == 0:
+            logger.warning("The child process seems to have gone away.")
+            fluentd.kill() # To make sure that the child terminates
+            raise hap.Signal(flavor="fluentd_read_finished")
+        timestamp, tag, raw_msg = self.__parse_line(line)
+        if timestamp is None:
+            return
+        if not self.__accept_tag_pattern.match(tag):
+            return
+        self.__put_event(timestamp, tag, raw_msg)
+        self.__arm_info.success()
 
     def __put_event(self, timestamp, tag, raw_msg):
         event_id = self.__generate_event_id()

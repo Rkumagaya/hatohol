@@ -103,9 +103,10 @@ class Signal:
     propagate some events and jump over stack frames.
     """
 
-    def __init__(self, restart=False, critical=False):
+    def __init__(self, restart=False, critical=False, flavor=None):
         self.restart = restart
         self.critical = critical
+        self.flavor = flavor
 
 def _handle_ioerr(e, timeout, expired_time):
     if e.errno != errno.EINTR:
