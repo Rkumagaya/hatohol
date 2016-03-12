@@ -143,6 +143,10 @@ nobase_dist_hatohol_client_DATA = \
 	viewer/severity_ranks_ajax.html \
 	viewer/tests.py
 
+pkgsysconf_DATA = \
+	conf/webui.conf
+pkgsysconfdir = $(sysconfdir)/$(PACKAGE)
+
 MO_FILES = \
 	conf/locale/ja/LC_MESSAGES/django.mo \
 	conf/locale/ja/LC_MESSAGES/djangojs.mo
