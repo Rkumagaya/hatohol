@@ -147,6 +147,9 @@ pkgsysconf_DATA = \
 	conf/webui.conf
 pkgsysconfdir = $(sysconfdir)/$(PACKAGE)
 
+EXTRA_DIST = \
+	$(pkgsysconf_DATA)
+
 MO_FILES = \
 	conf/locale/ja/LC_MESSAGES/django.mo \
 	conf/locale/ja/LC_MESSAGES/djangojs.mo
