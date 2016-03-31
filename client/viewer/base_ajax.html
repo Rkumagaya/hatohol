@@ -140,6 +140,7 @@
     <script type="text/javascript">
       var userProfile;
       var params = deparam();
+      var isTransitAllowed = false;
 
       hatohol.brandName = "{{ brand_name }}";
       hatohol.vendorName = "{{ vendor_name }}";
@@ -158,6 +159,20 @@
       }
       //toggleAutorefreshButton is hidden by default.
       $("#toggleAutoRefreshButton").hide();
+
+      // TEMP
+      console.log("set beforeunload.");
+      $(window).on("beforeunload",function(){
+        console.log("beforeunload !!!!!!!!!!!!!!: flag: " + isTransitAllowed);
+        if (isTransitAllowed)
+          return;
+        return "beforeunload";
+      });
+      hatoholTracer.addListener(HatoholTracePoint.PRE_HREF_CHANGE, function() {
+        console.log("Receive !!!!: flag: " + isTransitAllowed);
+        isTransitAllowed = true;
+      });
+
     </script>
 
 {% block templates %}
