@@ -24,24 +24,24 @@ var HatoholTracePoint = {
 var HatoholTracer = function() {
   var self = this;
 
-  self.callbacks = {};
+  self.listeners = {};
   for (var key in HatoholTracePoint) {
     var tracePointId = HatoholTracePoint[key];
-    self.callbacks[tracePointId] = []
+    self.listeners[tracePointId] = []
   }
 
-  this.addCallback = function(tracePointId, func) {
-    if (!(tracePointId in self.callbacks))
+  this.addListener = function(tracePointId, func) {
+    if (!(tracePointId in self.listeners))
       throw "Unknown tracePointId: " + tracePointId;
-    self.callbacks[tracePointId].push(func);
+    self.listeners[tracePointId].push(func);
   };
 
   this.pass = function(tracePointId, params) {
-    if (!(tracePointId in self.callbacks))
+    if (!(tracePointId in self.listeners))
       throw "Unknown tracePointId: " + tracePointId;
-    var callbacks = self.callbacks[tracePointId];
-    for (var i = 0; i < callbacks.length; i++)
-        callbacks[i](params);
+    var listeners = self.listeners[tracePointId];
+    for (var i = 0; i < listeners.length; i++)
+        listeners[i](params);
   };
 };
 
