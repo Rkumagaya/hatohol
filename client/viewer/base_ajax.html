@@ -158,6 +158,12 @@
       }
       //toggleAutorefreshButton is hidden by default.
       $("#toggleAutoRefreshButton").hide();
+
+      // TEMP
+      $(window).on("beforeunload",function(){
+        console.log("beforeunload !!!!!!!!!!!!!!");
+        return "beforeunload";
+      });
     </script>
 
 {% block templates %}
