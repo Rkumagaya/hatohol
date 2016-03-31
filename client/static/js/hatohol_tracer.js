@@ -27,7 +27,7 @@ var HatoholTracer = function() {
   self.listeners = {};
   for (var key in HatoholTracePoint) {
     var tracePointId = HatoholTracePoint[key];
-    self.listeners[tracePointId] = []
+    self.listeners[tracePointId] = [];
   }
 
   this.addListener = function(tracePointId, func) {
