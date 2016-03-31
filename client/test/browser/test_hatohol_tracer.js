@@ -16,7 +16,7 @@ describe('HatoholTracer', function() {
     var tracer = new HatoholTracer();
     var tracePointId = HatoholTracePoint.PRE_HREF_CHANGE;
     tracer.addCallback(tracePointId, cb);
-    tracer.invoke(tracePointId, {foo:1, goo:-2});
+    tracer.pass(tracePointId, {foo:1, goo:-2});
   });
 });
 

@@ -36,7 +36,7 @@ var HatoholTracer = function() {
     self.callbacks[tracePointId].push(func);
   };
 
-  this.invoke = function(tracePointId, params) {
+  this.pass = function(tracePointId, params) {
     if (!(tracePointId in self.callbacks))
       throw "Unknown tracePointId: " + tracePointId;
     var callbacks = self.callbacks[tracePointId];
