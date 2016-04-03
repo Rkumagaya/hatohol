@@ -425,7 +425,7 @@ function domesticLink(uri) {
 function anchorTagForDomesticLink(uri, label, klass)
 {
   tag = '<a href="' + uri + '"' +
-        ' onClick="domesticLink(\'' + uri + '\'); return false;"';
+        ' onclick="domesticLink(\'' + uri + '\'); return false;"';
   if (klass)
     tag += ' class="' + klass + '"';
   tag += '>' + label + '</a>';
