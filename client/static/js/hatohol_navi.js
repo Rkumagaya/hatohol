@@ -109,7 +109,8 @@ var HatoholNavi = function(userProfile, currentPage) {
       children: [
         {
           title: gettext("Online Documents"),
-          href: "http://www.hatohol.org/docs"
+          href: "http://www.hatohol.org/docs",
+          target: "_blank"
         },
         {
           title: hatohol.brandName + " " + gettext("version: ") + HATOHOL_VERSION,
@@ -169,6 +170,9 @@ var HatoholNavi = function(userProfile, currentPage) {
     } else if (menuItem.href == self.currentPage) {
       title = '<a>' + menuItem.title + '</a>';
       klass = "active";
+    } else if (menuItem.target) {
+      title = '<a href="' + menuItem.href  + '" target="' +
+              menuItem.target + '">' + menuItem.title + '</a>';
     } else {
       title = anchorTagForDomesticLink(menuItem.href, menuItem.title);
       klass = undefined;
