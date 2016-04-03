@@ -114,7 +114,8 @@ var HatoholNavi = function(userProfile, currentPage) {
         },
         {
           title: hatohol.brandName + " " + gettext("version: ") + HATOHOL_VERSION,
-          href: "#version"
+          href: "#version",
+          showOnly: true
         },
       ]
     },
@@ -173,6 +174,10 @@ var HatoholNavi = function(userProfile, currentPage) {
     } else if (menuItem.target) {
       title = '<a href="' + menuItem.href  + '" target="' +
               menuItem.target + '">' + menuItem.title + '</a>';
+      klass = undefined;
+    } else if (menuItem.showOnly) {
+      title = '<a href="' + menuItem.href  + '" onclick="return false">' +
+              menuItem.title + '</a>';
       klass = undefined;
     } else {
       title = anchorTagForDomesticLink(menuItem.href, menuItem.title);
