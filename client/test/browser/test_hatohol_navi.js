@@ -66,8 +66,8 @@ describe('HatoholNavi', function() {
     expected += '<ul class="dropdown-menu">';
     expected += '<li><a href="http://www.hatohol.org/docs" target="_blank">' +
                 gettext('Online Documents') + '</a></li>';
-    expected += domesticAnchorList("#version",
-                                   gettext('Hatohol version: ') + HATOHOL_VERSION);
+    expected += '<li><a href="#version" onclick="return false">' +
+                gettext('Hatohol version: ') + HATOHOL_VERSION + '</a></li>';
     expected += '</ul></li>';
 
     expect($("ul.nav")[0].innerHTML).to.be(expected);
